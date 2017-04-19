@@ -3,15 +3,15 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
-import Sortable from 'vue-sortable'
+import VueDragula from 'vue-dragula'
 
 Vue.config.productionTip = false
+Vue.use(VueDragula)
 
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
   router,
-  Sortable,
   template: '<App/>',
   components: { App }
 })

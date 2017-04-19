@@ -1,18 +1,14 @@
 <template>
     <div>
     estoy en {{msg}}
-        <ul v-sortable>
-        <li> aa<fila ></fila>         </li>
-        <li> bb<fila ></fila>         </li>
-        </ul>
+      
     </div>
 </template>
 
 <script>
-window.vSortable
 import Fila from './Fila.vue'
 export default {
-  name: 'Principal',
+  name: 'principal',
   data () {
     return {
       msg: 'Titulo Principal'
