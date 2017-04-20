@@ -1,73 +1,66 @@
 <template>
-  <div>
-    <h1> <a href="https://github.com/Astray-git/vue-dragula"> imagen    </a>  </h1>
-      <h3 class="tagline">Drag and drop so simple it hurts</h3>
-      <a href="https://github.com/Astray-git/vue-dragula"> imagen      </a>
-      <div class="parent">Note: these examples mimic the ones for <code>dragula</code>, but using <code>vue-dragula</code>.</div>
-      <div class="examples" id="examples">
-        <div class="parent">
-          <label>Move stuff between these two containers. Note how the stuff gets inserted near the mouse pointer? Great stuff.</label>
-          <div class="wrapper">
-            <div class="container" v-dragula="colOne" bag="first-bag">
-              <div v-for="text in colOne" v-on:click="onClick">{{text}} [click me]</div>
-            </div>
-            <div class="container" v-dragula="colTwo" bag="first-bag">
-              <div v-for="text in colTwo">{{text}}</div>
-            </div>
+  <section id="global-service-examples">
+    <div class="examples">
+      <div class="parent">
+        <label>Global Service example</label>
+        <div class="wrapper">
+          <div class="container" v-dragula="colOne" drake="first">
+            <div v-for="text in colOne" @click="onClick">{{text}} [click me]</div>
           </div>
-          <pre>
-            <code>
-              &lt;div v-dragula=&quot;colOne&quot; bag=&quot;first-bag&quot;&gt;&lt;/div&gt;
-              &lt;div v-dragula=&quot;colTwo&quot; bag=&quot;first-bag&quot;&gt;&lt;/div&gt;
-            </code>
-          </pre>
-          <h4>Result</h4>
-            <p>
-              <h5>colOne</h5>
-              {{colOne}}
-            </p>
-
-            <p>
-              <h5>colTwo</h5>
-              {{colTwo}}
-            </p>
+          <div class="container" v-dragula="colTwo" drake="first">
+            <div v-for="text in colTwo">
+              <span class="handle">+</span>
+              <span>{{text}}</span>
+            </div>
           </div>
         </div>
+        <h4>Result</h4>
+        <p>
+          <h5>colOne</h5>
+          <div v-for="text in colOne">{{text}}</div>
+        </p>
 
-        <div class="examples" id="examples-2">
-          <div class="parent">
-            <label>Modify items in dragula bag  with transition</label>
-            <div class="wrapper" v-for="container in categories">
-              <div class="container" v-dragula="container" bag="second-bag">
-                <div v-for="number in container" transition="scale">{{number}}</div>
-              </div>
-            </div>
-            <button v-on:click="testModify">Modify Items</button>
+        <p>
+          <h5>colTwo</h5>
+          <div v-for="text in colTwo">{{text}}</div>
+        </p>
+      </div>
+    </div>
+
+    <div class="examples" id="examples-2">
+      <div class="parent">
+        <label>Modify items in drake with transition</label>
+        <div class="wrapper" v-for="container in categories">
+          <div class="container" v-dragula="container" drake="second">
+            <div v-for="number in container" transition="scale">{{number}}</div>
           </div>
         </div>
+        <button @click="testModify">Modify Items</button>
+      </div>
+    </div>
 
-        <div class="examples" id="examples-3">
-          <div class="parent">
-            <label>Copy between containers</label>
-            <div class="wrapper">
-              <div class="container" v-dragula="copyOne" bag="third-bag" id="left">
-                <div v-for="text in copyOne" track-by="$index">{{text}}</div>
-              </div>
-              <div class="container" v-dragula="copyTwo" bag="third-bag" id="right">
-                <div v-for="text in copyTwo" track-by="$index">{{text}}</div>
-              </div>
-            </div>
+    <div class="examples" id="examples-3">
+      <div class="parent">
+        <label>Copy between containers</label>
+        <div class="wrapper">
+          <div class="container" v-dragula="copyOne" drake="third">
+            <div v-for="text in copyOne" track-by="$index">{{text}}</div>
+          </div>
+          <div class="container" v-dragula="copyTwo" drake="third">
+            <div v-for="text in copyTwo" track-by="$index">{{text}}</div>
           </div>
         </div>
       </div>
+    </div>
+  </section>
 </template>
 
 <script>
 export default {
-  name: 'toma',
+  name: 'globalService',
+
   data () {
     return {
-      msg: 'Titulo Principal',
       colOne: [
         'You can move these elements between these two containers',
         'Moving them anywhere else isn"t quite possible',
@@ -90,38 +83,33 @@ export default {
         'Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.',
         'Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem.'
       ]
-
     }
   },
-  created: function () {
-    console.log('test', this.$dragula.$service)
-    this.$dragula.$service.options('third-bag', {
+  created () {
+    console.log('GLOBAL SERVICE: created')
+    let service = this.$dragula.$service
+
+    // IMPORTANT!! setup empty named drakes matching
+    // directive drake configs in template
+    // otherwise may (currently) result in conflict
+
+    service.options('first', {
+    })
+
+    service.options('second', {
+    })
+
+    service.options('third', {
       copy: true
     })
-  },
-  ready: function () {
-    var _this = this
-    this.vueDragula.eventBus.$on(
-        'drop',
-        function (args) {
-          console.log('drop: ' + args[0])
-          console.log(_this.categories)
-        }
-      )
-    this.vueDragula.eventBus.$on(
-        'dropModel',
-        function (args) {
-          console.log('dropModel: ' + args)
-          console.log(_this.categories)
-        }
-      )
+
+    console.log('GLOBAL SERVICE: ready')
   },
   methods: {
-    onClick: function () {
-      console.log(this.vueDragula.find('first-bag'))
+    onClick () {
       window.alert('click event')
     },
-    testModify: function () {
+    testModify () {
       this.categories = [
         ['a', 'b', 'c'],
         ['d', 'e', 'f']
@@ -130,6 +118,7 @@ export default {
   }
 }
 </script>
+
 <style>
 
 body {

@@ -50,10 +50,10 @@
           <div class="parent">
             <label>Copy between containers</label>
             <div class="wrapper">
-              <div class="container" v-dragula="copyOne" bag="third-bag" id="left">
+              <div class="container" v-dragula="copyOne" bag="third-bag">
                 <div v-for="text in copyOne" track-by="$index">{{text}}</div>
               </div>
-              <div class="container" v-dragula="copyTwo" bag="third-bag" id="right">
+              <div class="container" v-dragula="copyTwo" bag="third-bag">
                 <div v-for="text in copyTwo" track-by="$index">{{text}}</div>
               </div>
             </div>
@@ -94,8 +94,8 @@ export default {
     }
   },
   created: function () {
-    console.log('test', this.$dragula.$service)
-    this.$dragula.$service.options('third-bag', {
+    console.log(this.$dragula)
+    this.$dragula.options('third-bag', {
       copy: true
     })
   },

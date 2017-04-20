@@ -6,8 +6,10 @@ import router from './router'
 import VueDragula from 'vue-dragula'
 
 Vue.config.productionTip = false
-Vue.use(VueDragula)
+Vue.use(VueDragula, hola)
+class hola {
 
+}
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
