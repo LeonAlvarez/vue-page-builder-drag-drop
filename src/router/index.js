@@ -1,8 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Hello from '@/components/Hello'
-import Principal from '@/components/Principal'
-import Toma from '@/components/Toma'
+import Builder from '@/components/Builder'
 
 Vue.use(Router)
 
@@ -14,14 +13,9 @@ export default new Router({
       component: Hello
     },
     {
-      path: '/principal',
-      name: 'Principal',
-      component: Principal
-    },
-    {
-      path: '/toma',
-      name: 'Toma',
-      component: Toma
+      path: '/builder',
+      name: 'Builder',
+      component: Builder
     }
   ]
 })
